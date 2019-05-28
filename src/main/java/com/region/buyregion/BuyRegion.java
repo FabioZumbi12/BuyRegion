@@ -965,13 +965,8 @@ public final class BuyRegion
                     PluginsHook.PluginRegion region = pluginsHooks.getRegion(event.getBlock().getLocation());
                     String regionName = event.getLine(1);
 
-                    if (region != null){
+                    if (region != null && regionName.isEmpty()){
                         regionName = region.getName();
-                        if (!region.isOwner(player) && !player.hasPermission("buyregion.admin")){
-                            event.getPlayer().sendMessage(ChatHelper.warning("NotOwner"));
-                            event.setLine(0, "-invalid-");
-                            return;
-                        }
                     } else if (!regionName.isEmpty()){
                         World world = event.getBlock().getWorld();
                         region = pluginsHooks.getRegion(regionName, world.getName());
@@ -982,6 +977,13 @@ public final class BuyRegion
                         event.setLine(0, "-invalid-");
                         return;
                     }
+
+                    if (!region.isOwner(player) && !player.hasPermission("buyregion.admin")){
+                        event.getPlayer().sendMessage(ChatHelper.warning("NotOwner"));
+                        event.setLine(0, "-invalid-");
+                        return;
+                    }
+
                     event.setLine(1, regionName);
                     try {
                         String dateString = event.getLine(3);
