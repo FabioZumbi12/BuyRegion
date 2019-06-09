@@ -9,7 +9,6 @@ import com.region.buyregion.plugins.PluginsHook;
 import com.region.buyregion.plugins.RedProtectHook;
 import com.region.buyregion.plugins.WorldGuardHook;
 import com.region.buyregion.regions.RentableRegion;
-import com.sk89q.worldguard.WorldGuard;
 import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -122,7 +121,7 @@ public final class BuyRegion
 
     private boolean setupPlugins(){
         if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")){
-            getLogger().info(String.format("Region Manager: WorldGuard %s (min 7.0.0 beta 3)", WorldGuard.getVersion()));
+            getLogger().info(String.format("Region Manager: WorldGuard %s (min 7.0.0 beta 3)", Bukkit.getPluginManager().getPlugin("WorldGuard").getDescription().getVersion()));
             pluginsHooks = new WorldGuardHook();
         } else if (Bukkit.getPluginManager().isPluginEnabled("RedProtect")){
             String version = Bukkit.getPluginManager().getPlugin("RedProtect").getDescription().getVersion();

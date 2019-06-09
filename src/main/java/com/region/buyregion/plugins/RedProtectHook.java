@@ -2,7 +2,6 @@ package com.region.buyregion.plugins;
 
 import br.net.fabiozumbi12.RedProtect.Bukkit.RedProtect;
 import br.net.fabiozumbi12.RedProtect.Bukkit.Region;
-import br.net.fabiozumbi12.RedProtect.Bukkit.helpers.RedProtectUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -72,7 +71,16 @@ public class RedProtectHook implements PluginsHook {
 
         @Override
         public List<UUID> getOwners() {
-            return region.getLeaders().stream().filter(l-> RedProtectUtil.isUUIDs(l.getUUID())).map(l->UUID.fromString(l.getUUID())).collect(Collectors.toList());
+            List<UUID> owners;
+            owners = region.getLeaders().stream().filter(l-> {
+                try {
+                    UUID.fromString(l.getUUID());
+                    return true;
+                } catch (Exception ignored){
+                    return false;
+                }
+            }).map(l->UUID.fromString(l.getUUID())).collect(Collectors.toList());
+            return owners;
         }
 
         @Override
